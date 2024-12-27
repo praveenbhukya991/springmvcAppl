@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>productlist</title>
+</head>
+<body>
+<div>
+<h2> productlist</h2>
+<table border="2">
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Brand</th>
+<th>Price</th>
+<th>madein</th>
+<th>quantity</th>
+<th>discount</th>
+<th>discountamount</th>
+<th>offerprice</th>
+<th>taxrate</th>
+<th>finalprice</th>
+<th>stockvalue</th>
+
+
+
+
+</table>
+</div>
+</body>
+</html>

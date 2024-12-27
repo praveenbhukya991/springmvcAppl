@@ -1,0 +1,118 @@
+package com.springmvc.srvice;
+
+import java.io.OptionalDataException;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.springmvc.entity.ProductEntity;
+import com.springmvc.model.ProductModel;
+import com.springmvc.repository.ProductRepository;
+
+@Service
+public class ProductService {
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    public ProductEntity servicelogic(ProductModel productModel) {
+        ProductEntity productEntity = convert(productModel);
+        return productRepository.save(productEntity);
+    }
+
+    public ProductEntity convert(ProductModel productModel) {
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setName(productModel.getName());
+        productEntity.setBrand(productModel.getBrand());
+        productEntity.setMadein(productModel.getMadein());
+        productEntity.setPrice(productModel.getPrice());
+        productEntity.setQuantity(productModel.getQuantity());
+        productEntity.setDiscount(productModel.getDiscount());
+        productEntity.setDiscountamount(((productEntity.getPrice()) * (productEntity.getDiscount())) / 100);
+        productEntity.setOfferprice(productEntity.getPrice() - productEntity.getDiscountamount());
+        productEntity.setTaxrate(18.00);
+        productEntity.setFinalprice(productEntity.getOfferprice() + (productEntity.getTaxrate() * productEntity.getOfferprice()) / 100);
+        productEntity.setStockvalue(productEntity.getPrice() * productEntity.getQuantity());
+        return productEntity;
+    }
+    public List<ProductEntity>getAllproducts()
+    {
+    	List<ProductEntity>products=productRepository.findAll();
+    	return products;
+    }
+    public ProductEntity searchpro(int id)
+    {
+    	Optional<ProductEntity>optionaldata=productRepository.findById(id);
+    	if (optionaldata.isPresent())
+    	{
+    		return optionaldata.get();
+    		
+    	}
+    	else {
+    		return null;	
+    	}
+    	
+    }
+    public void deleteproductById(int id)
+    {
+    	productRepository.deleteById(id);
+    }
+    public ProductModel editform(int id) {
+    	{
+    		Optional<ProductEntity> product = productRepository.findById(id);
+    		if(product.isPresent()) 
+    		{
+    			ProductModel model=new ProductModel();
+    			ProductEntity pr=new ProductEntity();
+    			pr=product.get();
+    			model.setName(pr.getName());
+    			model.setBrand(pr.getBrand());
+    			model.setMadein(pr.getMadein());
+    			model.setPrice(pr.getPrice());
+    			model.setQuantity(pr.getQuantity());
+    			model.setDiscount(pr.getDiscount());
+    			return model;
+    			}
+    		else
+    		{
+    			return null;
+    		}
+    	}
+    	
+    	
+    }
+
+	public void editsubmit(int id, ProductModel model) {
+		Optional<ProductEntity>optionaldata=productRepository.findById(id);
+		if (optionaldata.isPresent())
+		{
+			ProductEntity entity=optionaldata.get();
+			entity.setName(model.getName());
+			entity.setBrand(model.getBrand());
+			entity.setMadein(model.getMadein());
+			entity.setPrice(model.getPrice());
+			entity.setQuantity(model.getQuantity());
+			entity.setDiscount(model.getDiscount());
+			entity.setDiscountamount(entity.getPrice()*(entity.getDiscount()));
+			entity.setOfferprice(entity.getPrice()-entity.getDiscountamount());
+			entity.setTaxrate(18.0);
+			entity.setFinalprice(entity.getOfferprice()+(entity.getTaxrate()*entity.getOfferprice())/100);
+			entity.setStockvalue(entity.getPrice()*entity.getQuantity());
+			productRepository.save(entity);
+		}
+	}
+
+
+	}
+
+
+
+
+
+
+
+
+
+

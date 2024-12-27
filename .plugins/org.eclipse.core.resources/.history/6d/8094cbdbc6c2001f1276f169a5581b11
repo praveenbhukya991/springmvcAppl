@@ -1,0 +1,122 @@
+package com.springmvc.controller;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.validation.ValidationErrors;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.springmvc.entity.ProductEntity;
+import com.springmvc.model.ProductModel;
+import com.springmvc.srvice.ProductService;
+
+import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
+
+@Controller
+public class ProductController {
+
+    @Autowired
+     ProductService productservice;
+    @GetMapping("/productform")
+    public String getProductForm(ProductModel productModel ,Model model)
+    {
+    	productModel.setMadein("India");
+    	productModel.setQuantity(2);
+    	productModel.setDiscount(10.00);
+    	model.addAttribute("productModel",productModel);
+    	return "addproduct";
+    }
+@PostMapping("/savepoint")
+public String savepoint(@Valid ProductModel productModel,BindingResult bindingResult,Model model)
+{
+	HashMap<String, String>ValidationErrors=new HashMap<String,String>();
+	if (bindingResult.hasErrors()) {
+		for (FieldError error:bindingResult.getFieldError())
+		{
+			ValidationErrors.put(error.getField(),error.getDefaultMessage());
+		}
+		model.addAllAttributes("error",ValidationErrors);
+		return"addproduct";
+	}
+	productservice.servicelogic(productModel);
+	return "redirect:/getDetails";
+}
+
+
+
+   // @GetMapping("/productform")
+   // public String getProductForm() {
+       // return "addproduct";
+   //}
+
+   // @PostMapping("/savepoint")
+    //public String savepoint(ProductModel productModel) {
+    //  productservice.servicelogic(productModel);
+      //  return "success";
+    //}
+
+    @GetMapping("/contactus")
+    public String getContactUs() {
+        return "success1";
+    }
+
+    @GetMapping("/aboutus")
+    public String getAboutUs() {
+        return "aboutus";
+    }
+    @GetMapping("/getallproducts")
+    public String getAllProducts(Model model) {
+        List<ProductEntity> products = productservice.getAllproducts();
+         model.addAttribute("products", products);
+        return "Product-List";
+    }
+    @GetMapping("/search")
+    public String search()
+    {
+    	return "searchproduct";
+    }
+   @PostMapping ("/search-product")
+    
+    public String searchproduct(@RequestParam int id,Model model)
+    {
+    	ProductEntity productEntity=productservice.searchpro(id);
+    	model.addAttribute("balayya", productEntity);
+    	return "searchproduct";
+    }
+    @GetMapping("/delete/{id}")
+    public String deleteproductById(@PathVariable("id") int id)
+    {
+    	productservice.deleteproductById(id);
+    	return "redirect:/getallproducts";
+    }
+    @GetMapping("/edit/{id}")
+    public String editForm(@PathVariable("id") int id, Model model) {
+        ProductModel product = productservice.editform(id);
+        model.addAttribute("product", product);
+        model.addAttribute("id", id);
+        return "edit-form";  // This is the name of your view (edit-form.html)
+    }
+    
+    
+
+    @PostMapping("/editsubmit/{id}")
+    public String editsubmit(@PathVariable("id") int id, @ModelAttribute ProductModel model) {
+        // Pass the id and the updated model to the service
+        productservice.editsubmit(id, model);
+        return "redirect:/getallproducts"; // Redirect to the product list page after editing
+    }
+
+    
+}
+
+    

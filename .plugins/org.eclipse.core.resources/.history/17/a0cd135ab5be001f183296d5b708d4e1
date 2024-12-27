@@ -1,0 +1,9 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<title>response message</title>
+</head>
+<body>
+<h1> jai balayya</h1>
+</body>
+</html>

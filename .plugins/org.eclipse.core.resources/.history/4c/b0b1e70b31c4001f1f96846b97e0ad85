@@ -1,0 +1,22 @@
+package com.springrest.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+@RestController
+public class TestController {
+@GetMapping("/pincodedetails/{pincode}")
+public ResponseEntity<String> 
+getpincodedetails(@PathVariable("pincode") String pincode)
+{
+	RestTemplate restTemplate=new RestTemplate();
+ResponseEntity<String> response =restTemplate.getForEntity("//api.postalpincode.in/pincode/"+pincode,String.class);	
+return ResponseEntity.status(HttpStatus.OK)
+		.header("status","Data read success")
+		.body(response.getBody());
+}
+}

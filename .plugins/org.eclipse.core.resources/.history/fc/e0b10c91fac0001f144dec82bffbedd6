@@ -1,0 +1,15 @@
+package com.employee.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class EmployeeModel {
+	private int id;
+	private String name;
+	private int age;
+	private double salary;
+	private double daper;
+
+}

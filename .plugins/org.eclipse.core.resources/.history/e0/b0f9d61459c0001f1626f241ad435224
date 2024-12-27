@@ -1,0 +1,18 @@
+package com.employee.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+public class EmployeeController {
+	@GetMapping("/emp")
+	public String empForm() {
+		return "emp_form";
+	}
+	@PostMapping("/addEmployee")
+	public String getemp(EmployeeModel employeeModel)
+	{
+		System.out.println(employeeModel);
+		return "save";
+	}
+
+}

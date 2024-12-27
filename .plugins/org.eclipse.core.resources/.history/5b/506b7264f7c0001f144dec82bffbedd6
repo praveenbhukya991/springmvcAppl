@@ -1,0 +1,23 @@
+package com.employee.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.employee.EmployeeRepository;
+import com.employee.entity.EmployeeEntity;
+import com.employee.model.EmployeeModel;
+
+import jakarta.persistence.Convert;
+
+ 
+
+@Service
+public class EmployeeService {
+@Autowired
+private com.employee.repository.EmployeeRepository employeeRepository;
+public EmployeeEntity servicelogic(EmployeeModel employeeModel)
+{
+EmployeeEntity employeeEntity=Convert(employeeModel);
+return employeeRepository.save(employeeEntity);
+}
+}

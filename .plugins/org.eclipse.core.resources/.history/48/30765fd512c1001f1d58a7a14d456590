@@ -1,0 +1,38 @@
+ <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Form Details</title>
+    <style>
+        input {
+            height: 50px;
+            width: 400px;
+            font-size: 20px;
+            margin: 10px 0;
+        }
+        button {
+            height: 50px;
+            width: 200px;
+            font-size: 20px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        h1 {
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h1>Edit Form</h1>
+        <form th:action="@{/editsubmit/{id}(id=${product.id})}" th:object="${product}" method="post">
+            <input type="text" placeholder="Enter the product name" name="name" th:field="*{name}" />
+            <input type="text" placeholder="Enter the brand" name="brand" th:field="*{brand}" />
+            <input type="text" placeholder="Enter the made-in" name="madein" th:field="*{madein}" />
+            <input type="number" placeholder="Enter the price" name="price" th:field="*{price}" />
+            <input type="number" placeholder="Enter the quantity" name="quantity" th:field="*{quantity}" />
+            <input type="number" placeholder="Enter the discount rate" name="discountrate" th:field="*{discountrate}" />
+            <button type="submit">Submit</button>
+        </form>
+    </center>
+</body>
+</html>

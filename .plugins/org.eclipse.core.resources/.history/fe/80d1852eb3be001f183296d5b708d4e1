@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>form details </title>
+</head>
+<body>
+<center>
+<h1>form details</h1>
+<form action ="/savepoint" method="post">
+name:<input type ="text" name="name"><br>
+brand:<input  type ="text" name="brand"><br>
+made:<input type ="text" name="madein"><br>
+price:<input type ="number" name="price"><br>
+quantity:<input type ="number" name="quantity"><br>
+discount:<input type ="number" name="discount"><br>
+<button type ="submit" >submit</button>
+
+</form>
+</center>
+</body>
+</html>

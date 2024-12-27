@@ -1,0 +1,53 @@
+package com.employee.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.employee.entity.EmployeeEntity;
+import com.employee.model.EmployeeModel;
+import com.employee.service.EmployeeService;
+@Controller
+public class EmployeeController {
+	@Autowired
+	private EmployeeService employeeService;
+	@GetMapping("/emp")
+	public String empForm() {
+		return "empform";
+	}
+	@PostMapping("/addEmployee")
+	public String getemp(EmployeeModel employeeModel)
+	{
+		employeeService.servicelogic(employeeModel);
+		return "success";
+	}
+	@GetMapping("/getalldetails")
+	public String getAllemployee(Model model) {
+		List <EmployeeEntity> employee=employeeService.getAlldetails();
+		employee.addAttribute("employee",employee);
+		return "employeelist";
+	}
+	  @GetMapping("/search")
+public Srting search()
+{
+		  return "searchemployee";
+}
+	  @PostMapping("/searchemployee")
+	  public String searchemployee(@RequestParam  int id Model model)
+	  {
+		  EmployeeEntity employeeEntity=employeeService.search(id);
+		  model.addAllAttributes("balayya",employeeEntity);
+		  return "searchemployee";
+	  }
+	  @GetMapping("/delete/{id}")
+	  public String deleteemployeeById()@PathVariable("id") int id)
+{
+	EmployeeService.deleteemployeeById(id);
+	return "redirect:/getallemployee";
+	
+}
+}

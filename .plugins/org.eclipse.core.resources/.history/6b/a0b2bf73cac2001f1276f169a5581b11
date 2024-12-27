@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Product</title>
+</head>
+<body>
+    <h1>Add Product</h1>
+    <form th:action="@{/savepoint}" th:objrct="${productModel}"method="post">
+        <label >Name:</label>
+        <input type="text"  id="name" name="name" th:value="*{name}" >
+
+        <label>Brand:</label>
+        <input type="text" id="brand" name="brand" th:value ="{brand}" >
+
+        <label>Madein:</label>
+        <input type="text" name="madein" th:value ="*{madein}" >
+
+        <label>Price:</label>
+        <input type="number"  name="price"  min="0" th:value="*{price}">
+
+        <label>Quantity:</label>
+        <input type="number"  name="quantity" th:value ="*{quantity}">
+
+        <label>Discount:</label>
+        <input type="number"  name="discount" th:value ="*{discount}" >
+
+        <button type="submit">Add Product</button>
+    </form>
+</body>
+</html>
